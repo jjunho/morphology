@@ -8,10 +8,9 @@ import           ApiResponse
 import           Control.Monad.IO.Class    (liftIO)
 import           Data.Text                 (Text, pack, unpack)
 import           Network.HTTP.Types.Status (status422)
+import           NLP.Morphology.PT.Verb    (Txt (txt), mkParadigm)
 import qualified System.Log.FastLogger     as FL
 import qualified Web.Scotty                as S
-
-import           NLP.Morphology.PT.Verb    (Txt (txt), mkParadigm)
 
 -- Handlers
 createParadigmHandler :: FL.LoggerSet -> S.ActionM ()
