@@ -27,6 +27,8 @@ dependencies:
   - scotty
   - fast-logger
   - http-types
+  - wai
+  - wai-cors
 
 ghc-options:
   - -Wall

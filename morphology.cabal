@@ -50,9 +50,11 @@ library
     , http-types
     , scotty
     , text
+    , wai
+    , wai-cors
   default-language: Haskell2010
 
-executable verb-exe
+executable morphology-exe
   main-is: Main.hs
   other-modules:
       ApiResponse
@@ -72,9 +74,11 @@ executable verb-exe
     , morphology
     , scotty
     , text
+    , wai
+    , wai-cors
   default-language: Haskell2010
 
-test-suite verb-test
+test-suite morphology-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
@@ -93,4 +97,6 @@ test-suite verb-test
     , morphology
     , scotty
     , text
+    , wai
+    , wai-cors
   default-language: Haskell2010
