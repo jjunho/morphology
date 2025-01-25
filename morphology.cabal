@@ -1,0 +1,96 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           morphology
+version:        0.0.1.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/verb#readme>
+homepage:       https://github.com/jjunho/verb#readme
+bug-reports:    https://github.com/jjunho/verb/issues
+author:         Juliano Paiva Junho
+maintainer:     jjunho@gmail.com
+copyright:      2025 Juliano Paiva Junho
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/jjunho/verb
+
+library
+  exposed-modules:
+      NLP.Morphology.PT.Core
+      NLP.Morphology.PT.Nominal
+      NLP.Morphology.PT.Nominal.Core
+      NLP.Morphology.PT.Nominal.Paradigm
+      NLP.Morphology.PT.Nominal.Structure
+      NLP.Morphology.PT.Txt
+      NLP.Morphology.PT.Verb
+      NLP.Morphology.PT.Verb.Core
+      NLP.Morphology.PT.Verb.Paradigm
+      NLP.Morphology.PT.Verb.Structure
+  other-modules:
+      Paths_morphology
+  autogen-modules:
+      Paths_morphology
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      aeson
+    , base
+    , fast-logger
+    , hspec
+    , http-types
+    , scotty
+    , text
+  default-language: Haskell2010
+
+executable verb-exe
+  main-is: Main.hs
+  other-modules:
+      ApiResponse
+      Handlers
+      Paths_morphology
+  autogen-modules:
+      Paths_morphology
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base
+    , fast-logger
+    , hspec
+    , http-types
+    , morphology
+    , scotty
+    , text
+  default-language: Haskell2010
+
+test-suite verb-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_morphology
+  autogen-modules:
+      Paths_morphology
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base
+    , fast-logger
+    , hspec
+    , http-types
+    , morphology
+    , scotty
+    , text
+  default-language: Haskell2010
