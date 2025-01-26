@@ -9,6 +9,11 @@ module NLP.Morphology.PT.Core
   , Morpheme(..)
   , Case(..)
   , Person(..)
+  , Mood(..)
+  , Aspect(..)
+  , Tense(..)
+  , Polarity(..)
+  , Voice(..)
   ) where
 
 type Citation = String
@@ -24,6 +29,37 @@ data ThematicVowel
   | O'
   | U'
   | Z'
+  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+
+data Voice
+  = Active
+  | Passive
+  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+
+data Mood
+  = Indicative
+  | Subjunctive
+  | Conditional
+  | Imperative
+  | Infinitive
+  | Gerund
+  | Participle
+  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+
+data Aspect
+  = Imperfect
+  | Perfect
+  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+
+data Tense
+  = Present
+  | Past
+  | Future
+  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+
+data Polarity
+  = Affirmative
+  | Negative
   deriving (Show, Eq, Ord, Enum, Bounded, Read)
 
 data MoodTense
