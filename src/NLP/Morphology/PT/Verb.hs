@@ -104,4 +104,4 @@ mkTense c mt = do
 mkParadigm :: Citation -> Either String (Paradigm VerbStructure)
 mkParadigm c = do
   tenses <- mapM (mkTense c) [IPRS .. PPP]
-  return $ Paradigm {citation = c, tenseTables = tenses}
+  return $ Paradigm c tenses
