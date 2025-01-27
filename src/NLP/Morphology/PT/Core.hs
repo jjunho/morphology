@@ -1,3 +1,6 @@
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric  #-}
+
 module NLP.Morphology.PT.Core
   ( Citation
   , Root(..)
@@ -16,11 +19,14 @@ module NLP.Morphology.PT.Core
   , Voice(..)
   ) where
 
+import           Data.Aeson   (FromJSON, ToJSON)
+import           GHC.Generics (Generic)
+
 type Citation = String
 
 data Root =
   Root String
-  deriving (Show, Eq, Ord)
+  deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON, Read)
 
 data ThematicVowel
   = A'
@@ -29,12 +35,12 @@ data ThematicVowel
   | O'
   | U'
   | Z'
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Voice
   = Active
   | Passive
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Mood
   = Indicative
@@ -44,23 +50,23 @@ data Mood
   | Infinitive
   | Gerund
   | Participle
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Aspect
   = Imperfect
   | Perfect
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Tense
   = Present
   | Past
   | Future
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Polarity
   = Affirmative
   | Negative
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data MoodTense
   = IPRS
@@ -78,7 +84,7 @@ data MoodTense
   | INF
   | GER
   | PPP
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data PersonNumber
   = P1
@@ -87,13 +93,13 @@ data PersonNumber
   | P4
   | P5
   | P6
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Person
   = FST
   | SND
   | TRD
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Case
   = NOM
@@ -101,17 +107,17 @@ data Case
   | DAT
   | GEN
   | OBL
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Gender
   = MSC
   | FEM
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Number
   = SG
   | PL
-  deriving (Show, Eq, Ord, Enum, Bounded, Read)
+  deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Morpheme
   = A
@@ -137,4 +143,4 @@ data Morpheme
   | X -- ^ Null morpheme (inexistent form)
   | Z -- ^ Zero morpheme
   | Morph String
-  deriving (Show, Eq, Ord)
+  deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON, Read)

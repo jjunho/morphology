@@ -1,10 +1,14 @@
 {-# OPTIONS_GHC -Wno-partial-fields #-}
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric  #-}
 
 module NLP.Morphology.PT.Verb.Structure
   ( VerbStructure(..)
   , VerbParameters(..)
   ) where
 
+import           Data.Aeson             (FromJSON, ToJSON)
+import           GHC.Generics           (Generic)
 import           NLP.Morphology.PT.Core (Aspect, Citation, Gender, Mood,
                                          MoodTense, Number, Person,
                                          PersonNumber, Polarity, Root, Tense,
@@ -20,7 +24,7 @@ data VerbParameters = VParams
   , number   :: Number
   , gender   :: Gender
   , polarity :: Polarity
-  }
+  } deriving (Show, Eq, Ord, Generic, FromJSON, ToJSON)
 
 data VerbStructure
   = VS0
@@ -46,4 +50,4 @@ data VerbStructure
       { vs34VS3 :: VerbStructure
       , vs34VS4 :: VerbStructure
       }
-  deriving (Show, Eq, Ord)
+  deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)

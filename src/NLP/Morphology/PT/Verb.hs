@@ -2,7 +2,8 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 
 module NLP.Morphology.PT.Verb
-  ( Root(..)
+  ( Citation
+  , Root(..)
   , ThematicVowel(..)
   , VerbStructure(..)
   , MoodTense(..)

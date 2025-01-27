@@ -29,6 +29,7 @@ dependencies:
   - http-types
   - wai
   - wai-cors
+  - time
 
 ghc-options:
   - -Wall

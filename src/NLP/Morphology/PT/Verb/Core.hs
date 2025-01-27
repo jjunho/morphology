@@ -1,3 +1,6 @@
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric  #-}
+
 module NLP.Morphology.PT.Verb.Core
   ( Morph(..)
   , Morphs(..)
@@ -8,9 +11,10 @@ module NLP.Morphology.PT.Verb.Core
   , orth
   , mkIFUT
   , mkCOND
-  , morphs_haver_deep
   ) where
 
+import           Data.Aeson                       (FromJSON, ToJSON)
+import           GHC.Generics                     (Generic)
 import           NLP.Morphology.PT.Core           (Gender (..), MoodTense (..),
                                                    Morpheme (..), Number (..),
                                                    PersonNumber (..), Root (..),
@@ -72,7 +76,7 @@ data Morphemes
   | M4 [Morpheme]
   | M5 [Morpheme]
   | M34 Morphemes Morphemes
-  deriving (Show, Eq, Ord)
+  deriving (Show, Eq, Ord, Generic, ToJSON, FromJSON)
 
 class Morphs a where
   morphs :: a -> Morphemes
