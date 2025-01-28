@@ -3,7 +3,6 @@ module Main
   ) where
 
 import           Data.Either
-import           NLP.Morphology.PT.JSON (mkVerbJSON)
 import           NLP.Morphology.PT.Verb
 import           Test.Hspec
 
@@ -14,7 +13,6 @@ main = do
   putStrLn $ fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" IFUT P3
   putStrLn $ fromRight "" $ fmap (txt . deep) $ mkVS4 "falar" COND P5
   putStrLn $ fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" COND P5
-  print $ mkVerbJSON "falar"
   -- putStrLn $ fromRight "" $ fmap orth $ mkVS4 "falar" IFUT P3
   hspec $ do
     describe "mkCitation Tests" $ do
