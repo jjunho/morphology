@@ -75,3 +75,27 @@ instance Txt a => Txt (TenseTable a) where
 
 instance Txt a => Txt (Paradigm a) where
   txt (Paradigm _ tts) = intercalate "\n\n" $ fmap txt tts
+
+instance Txt Voice where
+  txt = show
+
+instance Txt Mood where
+  txt = show
+
+instance Txt Aspect where
+  txt = show
+
+instance Txt Tense where
+  txt = show
+
+instance Txt Polarity where
+  txt = show
+
+instance Txt Person where
+  txt = show
+
+instance Txt VerbParameters where
+  txt (VParams c v m a t p n g po) =
+    intercalate
+      ", "
+      [txt c, txt v, txt m, txt a, txt t, txt p, txt n, txt g, txt po]

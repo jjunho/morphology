@@ -113,25 +113,28 @@ GET /api/v1/paradigm/:citation
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Main where
+module Main
+  ( main
+  ) where
+
+import           NLP.Morphology.PT.Verb      (Paradigm, TenseTable,
+                                              VerbStructure, mkParadigm,
+                                              mkTense)
 
 import           Network.Wai                 (Middleware)
 import           Network.Wai.Middleware.Cors (CorsResourcePolicy (..), cors,
                                               simpleCorsResourcePolicy)
-import           NLP.Morphology.PT.Verb      (Citation, Paradigm,
-                                              TenseTable (TenseTable),
-                                              Txt (txt), VerbStructure,
-                                              mkParadigm, mkTense)
-import qualified System.Log.FastLogger       as FL
 import           Web.Scotty                  (ActionM, ScottyM, get, json,
-                                              middleware, param, scotty)
+                                              middleware, param, pathParam,
+                                              scotty)
+
+import qualified System.Log.FastLogger       as FL
 
 import           Control.Monad.IO.Class      (liftIO)
 import           Data.Aeson                  (FromJSON, ToJSON)
 import           Data.Text                   (Text, pack, unpack)
 import           Data.Time                   (defaultTimeLocale, formatTime,
                                               getCurrentTime)
-import qualified Data.Time.Clock.POSIX       as FL
 import           GHC.Generics                (Generic)
 
 -- Define ApiResponse type
@@ -177,13 +180,18 @@ loggerLine url citation tense = do
           _ -> isoTime <> " - " <> url
   return logLine
 
+-- Define logRequest function
+logRequest :: FL.LoggerSet -> Text -> Text -> Text -> ActionM ()
+logRequest logger url citation tense = do
+  logLine <- liftIO $ loggerLine url citation tense
+  liftIO $ FL.pushLogStrLn logger (FL.toLogStr logLine)
+  liftIO $ FL.flushLogStr logger
+
 -- Application Main
 defineRoutes :: FL.LoggerSet -> ScottyM ()
 defineRoutes logger = do
   get "/morphology/v1/health" $ do
-    logLine <- liftIO $ loggerLine "GET /api/v1/health" "" ""
-    liftIO $ FL.pushLogStrLn logger (FL.toLogStr logLine)
-    liftIO $ FL.flushLogStr logger
+    logRequest logger "GET /api/v1/health" "" ""
     json (ApiResponse "ok" "API is running" Nothing :: ApiResponse Text)
   get "/morphology/v1/paradigm/:citation" $ createParadigmHandler logger
   get "/morphology/v1/tense_paradigm/:citation/:tense"
@@ -191,10 +199,8 @@ defineRoutes logger = do
 
 createParadigmHandler :: FL.LoggerSet -> ActionM ()
 createParadigmHandler logger = do
-  citation <- param "citation"
-  logLine <- liftIO $ loggerLine "GET /morphology/v1/paradigm/" citation ""
-  liftIO $ FL.pushLogStrLn logger (FL.toLogStr logLine)
-  liftIO $ FL.flushLogStr logger
+  citation <- pathParam "citation"
+  logRequest logger "GET /morphology/v1/paradigm/" citation ""
   let paradigm = mkParadigm (unpack citation)
   case paradigm of
     Left e -> json (ApiResponse "error" (pack e) Nothing :: ApiResponse Text)
@@ -204,12 +210,9 @@ createParadigmHandler logger = do
 
 createTenseHandler :: FL.LoggerSet -> ActionM ()
 createTenseHandler logger = do
-  citation <- param "citation" :: ActionM Text
-  tense <- param "tense" :: ActionM Text
-  logLine <-
-    liftIO $ loggerLine "GET /morphology/v1/tense_paradigm/" citation tense
-  liftIO $ FL.pushLogStrLn logger (FL.toLogStr logLine)
-  liftIO $ FL.flushLogStr logger
+  citation <- pathParam "citation" :: ActionM Text
+  tense <- pathParam "tense" :: ActionM Text
+  logRequest logger "GET /morphology/v1/tense_paradigm/" citation tense
   let paradigm = mkTense (unpack citation) (read $ unpack tense)
   case paradigm of
     Left e -> json (ApiResponse "error" (pack e) Nothing :: ApiResponse Text)

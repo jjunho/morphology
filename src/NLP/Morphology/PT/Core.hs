@@ -96,9 +96,9 @@ data PersonNumber
   deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Person
-  = FST
-  | SND
-  | TRD
+  = First
+  | Second
+  | Third
   deriving (Show, Eq, Ord, Enum, Bounded, Generic, ToJSON, FromJSON, Read)
 
 data Case

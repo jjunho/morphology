@@ -15,10 +15,22 @@ module NLP.Morphology.PT.Verb
   , TenseTable(..)
   , Paradigm(..)
   , Txt(..)
-  , suppletive
+  , Parameter(..)
+  , Voice(..)
+  , Mood(..)
+  , Aspect(..)
+  , Tense(..)
+  , Polarity(..)
+  , Person(..)
+  , Case(..)
+  , VerbParameters(..)
+  , -- Ensure this is exported
+    suppletive
   , deep
   , shallow
   , orth
+  , mkVerb
+  , mkVerbParameters
   , mkVS3
   , mkVS4
   , mkVS5
@@ -106,3 +118,60 @@ mkParadigm :: Citation -> Either String (Paradigm VerbStructure)
 mkParadigm c = do
   tenses <- mapM (mkTense c) [IPRS .. PPP]
   return $ Paradigm c tenses
+
+mkVerbParameters ::
+     Citation
+  -> Voice
+  -> Mood
+  -> Aspect
+  -> Tense
+  -> Person
+  -> Number
+  -> Gender
+  -> Polarity
+  -> Either String VerbParameters
+mkVerbParameters c v m a t p n g po = do
+  c' <- mkCitation c
+  return $ VParams c' v m a t p n g po
+
+mkVerb :: Citation -> Either String VerbParameters
+mkVerb c =
+  mkVerbParameters
+    c
+    Active
+    Indicative
+    Imperfect
+    Present
+    Third
+    SG
+    MSC
+    Affirmative
+
+infix 1 %%
+
+class Parameter a where
+  (%%) :: VerbParameters -> a -> VerbParameters
+
+instance Parameter Voice where
+  (%%) vp v = vp {voice = v}
+
+instance Parameter Mood where
+  (%%) vp m = vp {mood = m}
+
+instance Parameter Aspect where
+  (%%) vp a = vp {aspect = a}
+
+instance Parameter Tense where
+  (%%) vp t = vp {tense = t}
+
+instance Parameter Person where
+  (%%) vp p = vp {person = p}
+
+instance Parameter Number where
+  (%%) vp n = vp {number = n}
+
+instance Parameter Gender where
+  (%%) vp g = vp {gender = g}
+
+instance Parameter Polarity where
+  (%%) vp po = vp {polarity = po}

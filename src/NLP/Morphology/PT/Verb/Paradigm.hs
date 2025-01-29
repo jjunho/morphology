@@ -17,6 +17,6 @@ data TenseTable a = TenseTable
   } deriving (Show, Eq, Ord, Functor, Generic, ToJSON, FromJSON)
 
 data Paradigm a = Paradigm
-  { citation    :: Citation
-  , tenseTables :: [TenseTable a]
+  { citationForm :: Citation
+  , tenseTables  :: [TenseTable a]
   } deriving (Show, Eq, Ord, Functor, Generic, ToJSON, FromJSON)
