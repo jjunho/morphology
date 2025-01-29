@@ -125,8 +125,7 @@ import           Network.Wai                 (Middleware)
 import           Network.Wai.Middleware.Cors (CorsResourcePolicy (..), cors,
                                               simpleCorsResourcePolicy)
 import           Web.Scotty                  (ActionM, ScottyM, get, json,
-                                              middleware, param, pathParam,
-                                              scotty)
+                                              middleware, pathParam, scotty)
 
 import qualified System.Log.FastLogger       as FL
 
