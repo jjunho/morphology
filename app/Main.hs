@@ -1,6 +1,6 @@
 {-|
 
-GET /api/v1/health
+GET /morphology/v1/health
 
   Retorna um JSON com o status da API.
 
@@ -24,7 +24,7 @@ GET /api/v1/health
     "content": {}
   }
 
-GET /api/v1/paradigm/:citation
+GET /morphology/v1/paradigm/:citation
 
   Retorna um JSON com o paradigma do verbo para a forma de citação informada.
 
@@ -46,7 +46,7 @@ GET /api/v1/paradigm/:citation
     - :citation: Forma de citação do verbo (por exemplo, "correr", "amar").
 
   Exemplo prático:
-    - Requisição: GET /api/v1/paradigm/correr
+    - Requisição: GET /morphology/v1/paradigm/correr
 
   Exemplo de resposta bem-sucedida:
   {
@@ -62,7 +62,7 @@ GET /api/v1/paradigm/:citation
     "content": {}
   }
 
-### GET /api/v1/tense_paradigm/:citation/:tense
+### GET /morphology/v1/tense_paradigm/:citation/:tense
   Retorna um JSON com o paradigma do verbo para a forma de citação informada no tempo verbal informado.
 
   Este endpoint é usado para recuperar informações sobre o paradigma verbal de um verbo específico em um tempo verbal específico.
@@ -94,7 +94,7 @@ GET /api/v1/paradigm/:citation
     - "PPP": Particípio Passado Passivo
 
   Exemplo prático:
-    - Requisição: GET /api/v1/tense_paradigm/correr/IPRS
+    - Requisição: GET /morphology/v1/tense_paradigm/correr/IPRS
 
   Exemplo de resposta bem-sucedida:
   {
@@ -172,9 +172,9 @@ loggerLine url citation tense = do
         pack $ formatTime defaultTimeLocale "%Y-%m-%dT%H:%M:%S%QZ" currentTime
   let logLine =
         case url of
-          "GET /api/v1/health" -> isoTime <> " - " <> url <> "/"
-          "GET /api/v1/paradigm/" -> isoTime <> " - " <> url <> "/" <> citation
-          "GET /api/v1/tense_paradigm/" ->
+          "GET /morphology/v1/health" -> isoTime <> " - " <> url <> "/"
+          "GET /morphology/v1/paradigm/" -> isoTime <> " - " <> url <> "/" <> citation
+          "GET /morphology/v1/tense_paradigm/" ->
             isoTime <> " - " <> url <> "/" <> citation <> "/" <> tense
           _ -> isoTime <> " - " <> url
   return logLine
@@ -190,7 +190,7 @@ logRequest logger url citation tense = do
 defineRoutes :: FL.LoggerSet -> ScottyM ()
 defineRoutes logger = do
   get "/morphology/v1/health" $ do
-    logRequest logger "GET /api/v1/health" "" ""
+    logRequest logger "GET /morphology/v1/health" "" ""
     json (ApiResponse "ok" "API is running" Nothing :: ApiResponse Text)
   get "/morphology/v1/paradigm/:citation" $ createParadigmHandler logger
   get "/morphology/v1/tense_paradigm/:citation/:tense"
