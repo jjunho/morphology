@@ -189,17 +189,17 @@ logRequest logger url citation tense = do
 -- Application Main
 defineRoutes :: FL.LoggerSet -> ScottyM ()
 defineRoutes logger = do
-  get "/morphology/v1/health" $ do
+  get "/api/v1/health" $ do
     logRequest logger "GET /api/v1/health" "" ""
     json (ApiResponse "ok" "API is running" Nothing :: ApiResponse Text)
-  get "/morphology/v1/paradigm/:citation" $ createParadigmHandler logger
-  get "/morphology/v1/tense_paradigm/:citation/:tense"
+  get "/api/v1/paradigm/:citation" $ createParadigmHandler logger
+  get "/api/v1/tense_paradigm/:citation/:tense"
     $ createTenseHandler logger
 
 createParadigmHandler :: FL.LoggerSet -> ActionM ()
 createParadigmHandler logger = do
   citation <- pathParam "citation"
-  logRequest logger "GET /morphology/v1/paradigm/" citation ""
+  logRequest logger "GET /api/v1/paradigm/" citation ""
   let paradigm = mkParadigm (unpack citation)
   case paradigm of
     Left e -> json (ApiResponse "error" (pack e) Nothing :: ApiResponse Text)
@@ -211,7 +211,7 @@ createTenseHandler :: FL.LoggerSet -> ActionM ()
 createTenseHandler logger = do
   citation <- pathParam "citation" :: ActionM Text
   tense <- pathParam "tense" :: ActionM Text
-  logRequest logger "GET /morphology/v1/tense_paradigm/" citation tense
+  logRequest logger "GET /api/v1/tense_paradigm/" citation tense
   let paradigm = mkTense (unpack citation) (read $ unpack tense)
   case paradigm of
     Left e -> json (ApiResponse "error" (pack e) Nothing :: ApiResponse Text)
