@@ -113,7 +113,7 @@ Esse endpoint permite obter flexões verbais detalhadas para usos mais específi
 - `"IFUT"`: Futuro do Indicativo
 - `"COND"`: Condicional Presente
 - `"SPRS"`: Presente do Subjuntivo
-- `"SPIF"`: Pretérito Imperfeito do Subjuntivo
+- `"SIPF"`: Pretérito Imperfeito do Subjuntivo
 - `"SFUT"`: Futuro do Subjuntivo
 - `"IMPA"`: Imperativo Afirmativo
 - `"IMPN"`: Imperativo Negativo
