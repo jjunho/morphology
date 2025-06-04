@@ -8,11 +8,12 @@ import           Test.Hspec
 
 main :: IO ()
 main = do
-  putStrLn $ fromRight "" $ fmap (txt . morphs) $ mkVS4 "falar" IFUT P3
-  putStrLn $ fromRight "" $ fmap (txt . deep) $ mkVS4 "falar" IFUT P3
-  putStrLn $ fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" IFUT P3
-  putStrLn $ fromRight "" $ fmap (txt . deep) $ mkVS4 "falar" COND P5
-  putStrLn $ fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" COND P5
+  -- Debugging examples (kept commented)
+  -- putStrLn $ fromRight "" $ fmap (txt . morphs) $ mkVS4 "falar" IFUT P3
+  -- putStrLn $ fromRight "" $ fmap (txt . deep) $ mkVS4 "falar" IFUT P3
+  -- putStrLn $ fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" IFUT P3
+  -- putStrLn $ fromRight "" $ fmap (txt . deep) $ mkVS4 "falar" COND P5
+  -- putStrLn $ fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" COND P5
   -- putStrLn $ fromRight "" $ fmap orth $ mkVS4 "falar" IFUT P3
   hspec $ do
     describe "mkCitation Tests" $ do
@@ -56,3 +57,11 @@ main = do
         let p2 = mkParadigm "f"
         fmap citation p2 `shouldSatisfy` isLeft
         fmap tenseTables p2 `shouldSatisfy` isLeft
+
+    describe "deep and shallow Tests" $ do
+      it "Returns deep form for IFUT P3" $ do
+        let res = fromRight "" $ fmap (txt . deep) $ mkVS4 "falar" IFUT P3
+        res `shouldBe` "FAL-A-R+H-A-∅-∅"
+      it "Returns shallow form for IFUT P3" $ do
+        let res = fromRight "" $ fmap (txt . shallow) $ mkVS4 "falar" IFUT P3
+        res `shouldBe` "FAL-A-R+∅-A-∅-∅"
