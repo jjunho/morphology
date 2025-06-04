@@ -4,6 +4,7 @@ module Main
 
 import           Data.Either
 import           NLP.Morphology.PT.Verb
+import           Text.Read                   (readEither)
 import           Test.Hspec
 
 main :: IO ()
@@ -47,12 +48,15 @@ main = do
         let t1 = mkTense "falar" IPRS
         fmap tenseTable t1 `shouldSatisfy` isRight
         fmap tenseForms t1 `shouldSatisfy` isRight
-    describe "mkParadigm Tests" $ do
-      it "Creates a paradigm for a valid citation" $ do
-        let p1 = mkParadigm "falar"
-        fmap citation p1 `shouldSatisfy` isRight
-        fmap tenseTables p1 `shouldSatisfy` isRight
-      it "Fails to create a paradigm for an invalid citation" $ do
-        let p2 = mkParadigm "f"
-        fmap citation p2 `shouldSatisfy` isLeft
-        fmap tenseTables p2 `shouldSatisfy` isLeft
+  describe "mkParadigm Tests" $ do
+    it "Creates a paradigm for a valid citation" $ do
+      let p1 = mkParadigm "falar"
+      fmap citation p1 `shouldSatisfy` isRight
+      fmap tenseTables p1 `shouldSatisfy` isRight
+    it "Fails to create a paradigm for an invalid citation" $ do
+      let p2 = mkParadigm "f"
+      fmap citation p2 `shouldSatisfy` isLeft
+      fmap tenseTables p2 `shouldSatisfy` isLeft
+  describe "Input Parsing Tests" $ do
+    it "Invalid mood string returns Left" $
+      (readEither "INVALID" :: Either String MoodTense) `shouldSatisfy` isLeft
