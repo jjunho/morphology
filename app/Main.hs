@@ -132,6 +132,7 @@ import qualified System.Log.FastLogger       as FL
 import           Control.Monad.IO.Class      (liftIO)
 import           Data.Aeson                  (FromJSON, ToJSON)
 import           Data.Text                   (Text, pack, unpack)
+import           Text.Read                   (readEither)
 import           Data.Time                   (defaultTimeLocale, formatTime,
                                               getCurrentTime)
 import           GHC.Generics                (Generic)
@@ -212,12 +213,15 @@ createTenseHandler logger = do
   citation <- pathParam "citation" :: ActionM Text
   tense <- pathParam "tense" :: ActionM Text
   logRequest logger "GET /morphology/v1/tense_paradigm/" citation tense
-  let paradigm = mkTense (unpack citation) (read $ unpack tense)
-  case paradigm of
+  case readEither (unpack tense) of
     Left e -> json (ApiResponse "error" (pack e) Nothing :: ApiResponse Text)
-    Right p ->
-      json
-        (ApiResponse "ok" "" (Just p) :: ApiResponse (TenseTable VerbStructure))
+    Right mt -> do
+      let paradigm = mkTense (unpack citation) mt
+      case paradigm of
+        Left e -> json (ApiResponse "error" (pack e) Nothing :: ApiResponse Text)
+        Right p ->
+          json
+            (ApiResponse "ok" "" (Just p) :: ApiResponse (TenseTable VerbStructure))
 
 main :: IO ()
 main = do
