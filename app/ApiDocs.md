@@ -12,7 +12,7 @@
 
 ---
 
-### GET /api/v1/health
+### GET /morphology/v1/health
 
 **Descrição:**
 Retorna um JSON com o status da API, usado para verificar se a API está operacional. Ideal para rotinas de monitoramento.
@@ -40,7 +40,7 @@ Retorna um JSON com o status da API, usado para verificar se a API está operaci
 
 ---
 
-### GET /api/v1/paradigm/:citation
+### GET /morphology/v1/paradigm/:citation
 
 **Descrição:**
 Retorna um JSON contendo o paradigma verbal para a forma de citação do verbo especificado.  
@@ -61,7 +61,7 @@ Esse endpoint é útil em aplicativos que manipulam flexões verbais, como conju
 **Exemplo de Requisição:**
 
 ```http
-GET /api/v1/paradigm/correr
+GET /morphology/v1/paradigm/correr
 ```
 
 **Exemplo de Resposta Bem-sucedida:**
@@ -86,7 +86,7 @@ GET /api/v1/paradigm/correr
 
 ---
 
-### GET /api/v1/tense_paradigm/:citation/:tense
+### GET /morphology/v1/tense_paradigm/:citation/:tense
 
 **Descrição:**
 Retorna um JSON com o paradigma verbal para a forma de citação informada, filtrado por um tempo verbal específico.  
@@ -125,7 +125,7 @@ Esse endpoint permite obter flexões verbais detalhadas para usos mais específi
 **Exemplo de Requisição:**
 
 ```http
-GET /api/v1/tense_paradigm/correr/IPRS
+GET /morphology/v1/tense_paradigm/correr/IPRS
 ```
 
 **Exemplo de Resposta Bem-sucedida:**
